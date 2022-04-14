@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 public class CabInvoiceGenerator {
+    RideRepository rideRepository = new RideRepository();
     private final int COST_PER_KM = 10;
     private final int COST_PER_MINUTE = 1;
     public int MIN_FARE = 5;
@@ -21,6 +22,7 @@ public class CabInvoiceGenerator {
 
         return totalFare;
     }
+
     public int numberOfRides(Rides[] rides) {
         return rides.length;
     }
@@ -32,12 +34,12 @@ public class CabInvoiceGenerator {
         double averageFare = totalFare/numberOfRides;
         return averageFare;
     }
+
     public double getRidesDetails(String userID) {
-        return this.calculateFare(RideRepository.getRides(userID));
+        return this.calculateFare(rideRepository.getRides(userID));
     }
 
     public void addRides(String userID, Rides[] rides) {
-        RideRepository.addRides(userID, rides);
+        rideRepository.addRides(userID, rides);
     }
-
 }
