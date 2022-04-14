@@ -6,7 +6,7 @@ public class CabInvoiceGenerator {
     public int MIN_FARE = 5;
     double totalFare;
 
-    public double CalculateFare(double distance, int time) {
+    public double calculateFare(double distance, int time) {
 
         totalFare = COST_PER_KM * distance + COST_PER_MINUTE * time;
         if(totalFare < MIN_FARE)
@@ -14,10 +14,10 @@ public class CabInvoiceGenerator {
         return totalFare;
     }
 
-    public double CalculateFare(Rides[] rides) {
+    public double calculateFare(Rides[] rides) {
         double totalFare = 0.0;
         for (Rides ride : rides)
-            totalFare = totalFare + this.CalculateFare(ride.distance, ride.time);
+            totalFare = totalFare + this.calculateFare(ride.distance, ride.time);
 
         return totalFare;
     }
@@ -27,11 +27,17 @@ public class CabInvoiceGenerator {
 
     public double calculateAverageFarePerRide(Rides[] rides) {
         CabInvoiceGenerator cabInvoiceGenerator = new CabInvoiceGenerator();
-        double totalFare = cabInvoiceGenerator.CalculateFare(rides);
+        double totalFare = cabInvoiceGenerator.calculateFare(rides);
         double numberOfRides = rides.length;
         double averageFare = totalFare/numberOfRides;
         return averageFare;
     }
+    public double getRidesDetails(String userID) {
+        return this.calculateFare(RideRepository.getRides(userID));
+    }
 
+    public void addRides(String userID, Rides[] rides) {
+        RideRepository.addRides(userID, rides);
+    }
 
 }
